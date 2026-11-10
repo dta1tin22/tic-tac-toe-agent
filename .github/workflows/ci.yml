@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: ["master"]
+
+permissions:
+  contents: read
+
+jobs:
+  format-and-build:
+    name: Check Code Style and Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y build-essential clang-format
+
+      - name: Check Code Style
+        uses: cpp-linter/cpp-linter-action@v2
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          style: "file"
+          tidy-checks: "-*"
+          ignore: |
+            test/
+            .github/
+
+      - name: Build
+        run: make build
