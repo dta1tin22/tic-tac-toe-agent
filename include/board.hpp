@@ -11,7 +11,7 @@ struct Move {
 
 class Board {
  public:
-	static constexpr int SIZE = 30;
+	static constexpr int SIZE = 8;
 	static constexpr int WIN_LEN = 5;
 
  private:

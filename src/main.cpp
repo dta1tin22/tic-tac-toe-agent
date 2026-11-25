@@ -4,7 +4,7 @@
 #include "agent.hpp"
 #include "argparse.hpp"
 #include "board.hpp"
-#include "minimax_strategy.hpp"
+#include "uct_strategy.hpp"
 
 Move get_opponent_move() {
 	int row, col;
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 
 	auto first = program.get<bool>("-f");
 
-	Agent agent(Mark::O, std::make_unique<MinimaxStrategy>());
+	Agent agent(Mark::O, std::make_unique<UCTStrategy>());
 
 	if (first) {
 		Move agent_move = agent.make_move();
